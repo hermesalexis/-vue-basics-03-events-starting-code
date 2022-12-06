@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Events</h1>
+    </header>
+    <section id="events">
+      <h2>Events in Action</h2>
+      <!-- v-on enlaza un evento al elemento html, en este caso el evento click
+        v-on es un event listener, donde se muestra la reactividad de vue.
+        No es buena práctica agregar en el html lógica compleja.
+      -->
+      <button v-on:click="incrementCounter(5)">Add 5</button>
+      <!-- para llamar una función se puede hacer con () o sin estos, ya que vue lo infiere
+        el modificador .right indica que sólo se ejecuta el manejador decreaseCounter cuando
+        presiones click derecho en el botón
+      -->
+      <button v-on:click.right="decreaseCounter(10)">Substract 10 </button>
+      <!--
+        La directiva v-once mantiene el valor inicial de la variable que está
+        bindiada al elemento data, en este caso counter se mantiene con su valor
+        inicial.
+      -->
+      <p v-once>Starting counter: {{ counter }} </p>
+      <p>Result: {{ counter }}</p>
+      <!-- enlazamos el evento input a la caja de texto para poder mostrar lo que se escribe en el parágrafo
+        el mejor evento para manejar los inputs es el input
+        Por defecto cuando se enlaza un event listener a una función en js (también lo hace vue), esa
+        función automáticamente recibe un argumento, que es un objeto que describe el evento que ha ocurrido.
+        Si se tiene el caso en que se debe enviar uno o más argumentos adicionales al método demás del objeto event,
+        se debe específicar con $event, en caso que no sería sólo el nombre del método setName.
+        en este caso hay un manejador de evento adicional keyup que indica que cuando se
+        presione la tecla enter, se actualice la variable confirmedName con name, y allí
+        se muestra el valor en el elemento que muestra el name
+      -->
+      <input type="text" v-on:input="setName($event, 'Galvis')" v-on:keyup.enter="confirmInput">
+      <p>Your name: {{ confirmedName }} </p>
+      <!--
+        .prevent es un modificador del manejador de los eventos que provee vue, en este caso
+        modifica el comportamiento por defecto que trae un submit evitando hacer el request al
+        servidor, y si permite ser controlado por el método submitForm
+      -->
+      <form v-on:submit.prevent="submitForm">
+        <input type="text">
+        <button>Sign up</button>
+      </form>
+    </section>
+  </body>
+</html>
